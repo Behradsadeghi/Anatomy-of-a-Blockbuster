@@ -41,6 +41,7 @@ The Movies Dataset is available on Kaggle:
 ---
 
 ## 📂 Project Structure
+```
 movie-blockbuster-analysis/
 │
 ├── data/
@@ -63,7 +64,7 @@ movie-blockbuster-analysis/
 ├── requirements.txt
 └── README.md
 ---
-
+```
 ## 🗂️ Module Descriptions
 
 | File | Description |
