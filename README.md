@@ -119,9 +119,19 @@ A new column `is_blockbuster` is created during preprocessing.
 ```bash
 git clone https://github.com/Behradsadeghi/Anatomy-of-a-Blockbuster.git
 cd Anatomy-of-a-Blockbuster
+```
+### Create a virtual environment (recommended)
+```
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate      # macOS / Linux
+venv\Scripts\activate         # Windows
+```
+### Install dependencies
+```
 pip install -r requirements.txt
+```
+### Launch Streamlit app
+```
 streamlit run app.py
-
+```
 
