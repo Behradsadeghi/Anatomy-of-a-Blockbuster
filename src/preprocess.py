@@ -9,6 +9,8 @@ DATA_DIR = BASE_DIR / "data"
 RAW_MOVIES_PATH = DATA_DIR / "movies_metadata.csv"
 CLEAN_CACHE_DIR = DATA_DIR
 
+EXCLUDED_MOVIE_IDS = {2667}  # remove outlier ROI title (e.g., The Blair Witch Project)
+
 
 def _safe_json_list(val):
     """Parse JSON-like strings safely into list of dicts or names."""
@@ -82,6 +84,7 @@ def preprocess_movies_full(
     if "id" in df.columns:
         df["id"] = pd.to_numeric(df["id"], errors="coerce")
     df = df.drop_duplicates(subset=["id"]).reset_index(drop=True)
+    df = df[~df["id"].isin(EXCLUDED_MOVIE_IDS)]
 
     numeric_cols = ["budget", "revenue", "popularity", "runtime", "vote_average", "vote_count"]
     for col in numeric_cols:
@@ -159,6 +162,7 @@ def preprocess_movies_full(
             (df["revenue"] >= rev_cut)
             & (df["roi"] >= roi_cut)
             & (df["popularity"] >= pop_cut)
+            & (df["roi"] > 1)  # ensure positive profitability, not just percentile
         )
         | (df["blockbuster_score"] >= score_cut)
     ).astype(int)
@@ -167,8 +171,8 @@ def preprocess_movies_full(
     df["season"] = df["release_month"].map(season_map).fillna("Unknown")
     df["budget_band"] = pd.cut(
         df["budget"],
-        bins=[-1, 10_000_000, 40_000_000, 100_000_000, 250_000_000, np.inf],
-        labels=["<10M", "10–40M", "40–100M", "100–250M", "250M+"],
+        bins=[-1, 10_000_000, 50_000_000, 100_000_000, 250_000_000, np.inf],
+        labels=["<10M", "10–50M", "50–100M", "100–250M", "250M+"],
     )
 
     # Drop rows with more than one missing among key fields
