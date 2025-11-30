@@ -5,6 +5,10 @@ This project investigates what factors contribute to a movie becoming a **blockb
 Using the Kaggle *Movies Dataset*, we analyze how **genre**, **budget**, **runtime**, **release date**, **cast & crew**, and **production companies** influence **box office revenue and audience reception**.
 
 An interactive **Streamlit dashboard** is included for exploring these insights.
+---
+📥 **Download the Dataset:**  
+The Movies Dataset is available on Kaggle:  
+👉 https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset
 
 ---
 
